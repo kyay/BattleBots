@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleBot.cs" />
     <Compile Include="EnumUtils.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
