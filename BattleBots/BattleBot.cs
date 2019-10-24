@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BattleBots
 {
-    public class BattleBot : Vehicle
+      public sealed class BattleBot : Vehicle
     {
         public override void Heal(int amount)
         {
