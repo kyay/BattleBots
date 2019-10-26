@@ -21,13 +21,19 @@ namespace BattleBots
         public BattleBot()
         {
             Name = "Mr. Letts";
-            Weapon = WEAPON_FLAME_THROWER;
-        }
+			Weapon = Game.WEAPON_FLAME_THROWER;
+		}
         
+		public BattleBot(string weapon)
+		{
+			Weapon = weapon;
+			Weapon = Game.WEAPON_FLAME_THROWER;
+		}
         public BattleBot(string name, string weapon)
         {
             Name = name;
             Weapon = weapon;
-        }
-    }
+		}
+
+	}
 }
