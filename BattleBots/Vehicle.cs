@@ -8,7 +8,7 @@ namespace BattleBots
 {
     public abstract class Vehicle : Player
     {
-        public int FuelLevel { get; set; } = 50;
+        public int FuelLevel { get; set; } = 75;
         public int ConditionLevel { get; set; } = 50;
         public string Weapon { get; set; }
 

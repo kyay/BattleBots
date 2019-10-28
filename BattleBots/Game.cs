@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Threading;
 using System.Timers;
 
 namespace BattleBots
 {
 	public class Game
 	{
-		public const string WEAPON_CIRCULAR_SAW = "Circular Saw";
-		public const string WEAPON_CLAW_CUTTER = "Claw Cutter";
-		public const string WEAPON_FLAME_THROWER = "Flame Thrower";
-		public const string WEAPON_SLEDGE_HAMMER = "Sledge Hammer";
-		public const string WEAPON_SPINNNING_BLADE = "Spinning Blade";
+		public const string WEAPON_CIRCULAR_SAW = "Pikachu";
+		public const string WEAPON_CLAW_CUTTER = "Squirtle";
+		public const string WEAPON_FLAME_THROWER = "Pidgey";
+		public const string WEAPON_SLEDGE_HAMMER = "Geodude";
+		public const string WEAPON_SPINNNING_BLADE = "Swadloon";
 
 		public static string[] WEAPONS = new string[] { WEAPON_CIRCULAR_SAW, WEAPON_CLAW_CUTTER, WEAPON_FLAME_THROWER, WEAPON_SLEDGE_HAMMER, WEAPON_SPINNNING_BLADE };
-		private Timer timer;
+		private System.Timers.Timer timer;
 		private Random rGen = new Random();
 		private int intTimeSinceGameStart;
 		private int intBattleStartTime;
@@ -20,7 +21,7 @@ namespace BattleBots
 
 		public Game()
 		{
-			timer = new Timer();
+			timer = new System.Timers.Timer();
 			timer.Enabled = true;
 			timer.Interval = 1000;
 			timer.Elapsed += Timer_Elapsed;
@@ -133,11 +134,14 @@ namespace BattleBots
 					}
 					
 				}
+                Thread.Sleep(1000);
 				SpeakingConsole.WriteLine("\nBot stats:\nName: " + battleBot.Name + "\nWeapon: " + battleBot.Weapon + "\nCondition Level: " + battleBot.ConditionLevel + "\nFuel Level: " + battleBot.FuelLevel + "\nTurn Time: " + intTimeElapsed + "\nTotal Battle Time: " + intTimeSinceGameStart + "\nPoints: " + battleBot.Score + "\nHighest Score: " + battleBot.HighScore);
-				Battle(ref battleBot);
+                Thread.Sleep(1000);
+                Battle(ref battleBot);
 			}
 			else
 			{
+                battleBot.UpdateHighScore(battleBot.Score);
 				SpeakingConsole.WriteLine("Your bot has lost. Do you want to play again?");
 				if (SpeakingConsole.ReadLine().Trim().ToLower()[0] == 'y')
 				{
