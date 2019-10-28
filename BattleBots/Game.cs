@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BattleBots.Properties;
+using System;
+using System.Media;
 using System.Threading;
 using System.Timers;
 
@@ -19,7 +21,12 @@ namespace BattleBots
 		private int intBattleStartTime;
 		private int intTimeElapsed;
 
-		public Game()
+        private SoundPlayer openingSound = new SoundPlayer(Resources.Pokemon_Open);
+        private SoundPlayer battleSound = new SoundPlayer(Resources.Pokemon_Battle);
+
+        private bool blnIsBattleSoundPlaying = false;
+
+        public Game()
 		{
 			timer = new System.Timers.Timer();
 			timer.Enabled = true;
@@ -35,6 +42,7 @@ namespace BattleBots
 
 		public BattleBot PromptUserForBot()
 		{
+            openingSound.Play();
 			Console.WriteLine("Do you want to enable the reading out of all the text?");
 			if (Console.ReadLine().Trim().ToLower()[0] != 'y')
 			{
@@ -55,7 +63,7 @@ namespace BattleBots
 			{
 				SpeakingConsole.WriteLine("Please enter a valid weapon from above");
 			}
-
+            openingSound.Stop();
 			timer.Start();
 			intTimeSinceGameStart = 0;
 			if (IsValidWeapon(strWeapon))
@@ -76,8 +84,14 @@ namespace BattleBots
 		}
 
 		public void Battle(ref BattleBot battleBot)
-		{
-			if (battleBot.FuelLevel > 0 && battleBot.ConditionLevel > 0)
+        {
+            if(!blnIsBattleSoundPlaying)
+            {
+                battleSound.PlayLooping();
+                blnIsBattleSoundPlaying = true;
+            }
+
+            if (battleBot.FuelLevel > 0 && battleBot.ConditionLevel > 0)
 			{
 				intBattleStartTime = intTimeSinceGameStart;
 				string computerWeapon = WEAPONS[rGen.Next(WEAPONS.Length)];
