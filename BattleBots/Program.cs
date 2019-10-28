@@ -10,11 +10,11 @@ namespace BattleBots
     {
         static void Main(string[] args)
         {
-			Game game = new Game();
-			BattleBot bot = game.PromptUserForBot();
-			SpeakingConsole.WriteLine("Bot stats:\nName: " + bot.Name + ",\nWeapon: " + bot.Weapon + ",\nCondition Level: " + bot.ConditionLevel + ",\nFuel Level: " + bot.FuelLevel);
-			game.Battle(ref bot);
-			Console.ReadLine();
+            Game game = new Game();
+            BattleBot bot = game.PromptUserForBot();
+            SpeakingConsole.WriteLine("Bot stats:\nName: " + bot.Name + ",\nWeapon: " + bot.Weapon + ",\nCondition Level: " + bot.ConditionLevel + ",\nFuel Level: " + bot.FuelLevel);
+            game.Battle(ref bot);
+            Console.ReadLine();
         }
     }
 }

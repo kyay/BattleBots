@@ -16,21 +16,21 @@ namespace BattleBots
         {
             Weapon = Game.WEAPON_CIRCULAR_SAW;
             Name = "Ash";
-		}
+        }
 
-		public Vehicle(string weapon)
-		{
+        public Vehicle(string weapon)
+        {
             Weapon = weapon;
-			Name = "Ash";
-		}
+            Name = "Ash";
+        }
 
-		public Vehicle(string name, string weapon)
-		{
-			Weapon = weapon;
-			Name = name;
-		}
+        public Vehicle(string name, string weapon)
+        {
+            Weapon = weapon;
+            Name = name;
+        }
 
-		public void HandleDamage(int damage)
+        public void HandleDamage(int damage)
         {
             ConditionLevel -= damage;
         }

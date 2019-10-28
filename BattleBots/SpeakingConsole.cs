@@ -75,52 +75,52 @@ namespace BattleBots
 
         public static void Speak(string s)
         {
-			if (EnableSpeaking)
-			{
-				try
-				{
-					RestRequest request = new RestRequest("http://www.fromtexttospeech.com/");
-					request.AddParameter("language", ChosenLanguage.GetDescription(), ParameterType.GetOrPost);
-					request.AddParameter("voice", ChosenVoice.GetDescription(), ParameterType.GetOrPost);
-					request.AddParameter("speed", ((int)ChosenSpeed).ToString(), ParameterType.GetOrPost);
-					request.AddParameter("input_text", s, ParameterType.GetOrPost);
-					request.AddParameter("action", "process_text", ParameterType.GetOrPost);
-					IRestResponse response = client.Post(request);
-					int intLinkStart = response.Content.IndexOf(MP3_LINK_START_MARKER) + MP3_LINK_START_MARKER.Length;
-					string strTempContent = response.Content.Substring(intLinkStart);
-					string strLink = strTempContent.Substring(0, strTempContent.IndexOf(MP3_LINK_END_MARKER));
-					request = new RestRequest("http://www.fromtexttospeech.com" + strLink);
-					byte[] bytes = client.DownloadData(request);
-					using (Stream stream = new FileStream(string.Format(MP3_PATH, intFileNumber), FileMode.Create))
-					{
-						stream.Write(bytes, 0, bytes.Length);
+            if (EnableSpeaking)
+            {
+                try
+                {
+                    RestRequest request = new RestRequest("http://www.fromtexttospeech.com/");
+                    request.AddParameter("language", ChosenLanguage.GetDescription(), ParameterType.GetOrPost);
+                    request.AddParameter("voice", ChosenVoice.GetDescription(), ParameterType.GetOrPost);
+                    request.AddParameter("speed", ((int)ChosenSpeed).ToString(), ParameterType.GetOrPost);
+                    request.AddParameter("input_text", s, ParameterType.GetOrPost);
+                    request.AddParameter("action", "process_text", ParameterType.GetOrPost);
+                    IRestResponse response = client.Post(request);
+                    int intLinkStart = response.Content.IndexOf(MP3_LINK_START_MARKER) + MP3_LINK_START_MARKER.Length;
+                    string strTempContent = response.Content.Substring(intLinkStart);
+                    string strLink = strTempContent.Substring(0, strTempContent.IndexOf(MP3_LINK_END_MARKER));
+                    request = new RestRequest("http://www.fromtexttospeech.com" + strLink);
+                    byte[] bytes = client.DownloadData(request);
+                    using (Stream stream = new FileStream(string.Format(MP3_PATH, intFileNumber), FileMode.Create))
+                    {
+                        stream.Write(bytes, 0, bytes.Length);
 
-					}
-					lock (sources)
-					{
-						sources.Add(string.Format(MP3_PATH, intFileNumber));
-						//if (sources.Count == 1)
-						//{
-						//	wplayer.URL = sources[0];
-						//	wplayer.controls.play();
-						//}
-						if (intFileNumber == 0)
-						{
-							wplayer.URL = sources[0];
-							wplayer.controls.play();
-						}
-						intFileNumber++;
-					}
-				}
-				catch (StackOverflowException e)
-				{
-					throw e;
-				}
-				catch
-				{
-					Speak(s);
-				}
-			}
+                    }
+                    lock (sources)
+                    {
+                        sources.Add(string.Format(MP3_PATH, intFileNumber));
+                        //if (sources.Count == 1)
+                        //{
+                        //	wplayer.URL = sources[0];
+                        //	wplayer.controls.play();
+                        //}
+                        if (intFileNumber == 0)
+                        {
+                            wplayer.URL = sources[0];
+                            wplayer.controls.play();
+                        }
+                        intFileNumber++;
+                    }
+                }
+                catch (StackOverflowException e)
+                {
+                    throw e;
+                }
+                catch
+                {
+                    Speak(s);
+                }
+            }
         }
 
         private static void player_PlayStateChange(int newState)
