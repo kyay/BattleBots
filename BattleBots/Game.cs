@@ -15,7 +15,8 @@ namespace BattleBots
 		public const string WEAPON_SPINNNING_BLADE = "Swadloon";
 
 		public static string[] WEAPONS = new string[] { WEAPON_CIRCULAR_SAW, WEAPON_CLAW_CUTTER, WEAPON_FLAME_THROWER, WEAPON_SLEDGE_HAMMER, WEAPON_SPINNNING_BLADE };
-		private System.Timers.Timer timer;
+        private static ConsoleKey[] KONAMI_CODE = new ConsoleKey[] { ConsoleKey.UpArrow, ConsoleKey.UpArrow, ConsoleKey.DownArrow, ConsoleKey.DownArrow, ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.B, ConsoleKey.A };
+        private System.Timers.Timer timer;
 		private Random rGen = new Random();
 		private int intTimeSinceGameStart;
 		private int intBattleStartTime;
@@ -97,10 +98,30 @@ namespace BattleBots
 				string computerWeapon = WEAPONS[rGen.Next(WEAPONS.Length)];
 				SpeakingConsole.WriteLine("\nYou are being attacked by a " + computerWeapon + ". What do you do?");
 				bool blnValidAction = false;
+                char charReadKey = '\0';
 				while (!blnValidAction)
 				{
-					SpeakingConsole.WriteLine("Attack, Defend, or Retreat");
-					string strAction = SpeakingConsole.ReadLine();
+                    bool blnCheatCodeWorked = false;
+					SpeakingConsole.WriteLine("\nAttack, Defend, or Retreat");
+                    for(int i = 0; i < KONAMI_CODE.Length; i++)
+                    {
+                        ConsoleKeyInfo key = Console.ReadKey();
+                        charReadKey = key.KeyChar;
+                        if (key.Key != KONAMI_CODE[i])
+                        {
+                            break;
+                        }
+                        if(i == KONAMI_CODE.Length - 1)
+                        {
+                            battleBot.GainPoints(20);
+                            SpeakingConsole.WriteLine("\nYou have cheated, trainer!! But you will get 20 extra points because that's just how the world is (unfair)");
+                            blnCheatCodeWorked = true;
+                        }
+                    }
+                    if (blnCheatCodeWorked)
+                        continue;
+
+					string strAction = SpeakingConsole.SpeakAndReturn(charReadKey + Console.ReadLine());
 					switch (strAction.Trim().ToLower())
 					{
 						case "attack":
@@ -108,11 +129,13 @@ namespace BattleBots
 							if(CanBeat(battleBot.Weapon, computerWeapon))
 							{
 								battleBot.GainPoints(5);
+                                SpeakingConsole.WriteLine("You have destroyed your opponent!!");
 							}
 							else
 							{
 								battleBot.HandleDamage(5);
-							}
+                                SpeakingConsole.WriteLine("You have tragically lost!!");
+                            }
 							battleBot.ConsumeFuel(2 * intTimeElapsed);
 							break;
 						case "defend":
@@ -120,27 +143,33 @@ namespace BattleBots
 							if (CanBeat(battleBot.Weapon, computerWeapon))
 							{
 								battleBot.GainPoints(2);
-							}
+                                SpeakingConsole.WriteLine("You have defended yourself like a noble man!!");
+                            }
 							else
 							{
 								battleBot.HandleDamage(2);
-							}
+                                SpeakingConsole.WriteLine("Whoops, your shield has failed!!");
+                            }
 							battleBot.ConsumeFuel(intTimeElapsed);
 							break;
 						case "retreat":
 							blnValidAction = true;
 							if(rGen.Next(0, 4) == 0)
 							{
-								SpeakingConsole.WriteLine("Unfortunately, you couldn't escape in time");
+								SpeakingConsole.WriteLine("Unfortunately, you couldn't escape in time!!");
 								battleBot.HandleDamage(7);
-							}
+                            }
+                            else
+                            {
+                                SpeakingConsole.WriteLine("You have succesfully escaped from the battle like a coward!! No points for you!!");
+                            }
 							battleBot.ConsumeFuel(3 * intTimeElapsed);
 							break;
 						case "absorb":
 							if (battleBot.Weapon == computerWeapon)
 							{
 								blnValidAction = true;
-								SpeakingConsole.WriteLine("You have succesfully absorbed the opponent's power");
+								SpeakingConsole.WriteLine("You have succesfully absorbed the opponent's power!!");
 								battleBot.Refuel(10);
 								battleBot.Heal(10);
 							}
@@ -149,7 +178,7 @@ namespace BattleBots
 					
 				}
                 Thread.Sleep(1000);
-				SpeakingConsole.WriteLine("\nBot stats:\nName: " + battleBot.Name + "\nWeapon: " + battleBot.Weapon + "\nCondition Level: " + battleBot.ConditionLevel + "\nFuel Level: " + battleBot.FuelLevel + "\nTurn Time: " + intTimeElapsed + "\nTotal Battle Time: " + intTimeSinceGameStart + "\nPoints: " + battleBot.Score + "\nHighest Score: " + battleBot.HighScore);
+				SpeakingConsole.WriteLine("\nBot stats:\nName: " + battleBot.Name + ",\nWeapon: " + battleBot.Weapon + ",\nCondition Level: " + battleBot.ConditionLevel + ",\nFuel Level: " + battleBot.FuelLevel + ",\nTurn Time: " + intTimeElapsed + ",\nTotal Battle Time: " + intTimeSinceGameStart + ",\nPoints: " + battleBot.Score + ",\nHighest Score: " + battleBot.HighScore);
                 Thread.Sleep(1000);
                 Battle(ref battleBot);
 			}
