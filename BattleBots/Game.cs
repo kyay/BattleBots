@@ -10,13 +10,13 @@ namespace BattleBots
     {
         public const string WEAPON_CIRCULAR_SAW = "Pikachu";
         public const string WEAPON_CLAW_CUTTER = "Squirtle";
-        public const string WEAPON_FLAME_THROWER = "Pidgey";
+        public const string WEAPON_FLAME_THROWER = "Charamander";
         public const string WEAPON_SLEDGE_HAMMER = "Geodude";
-        public const string WEAPON_SPINNNING_BLADE = "Swadloon";
+        public const string WEAPON_SPINNNING_BLADE = "Bulbasaur";
 
         public static string[] WEAPONS = new string[] { WEAPON_CIRCULAR_SAW, WEAPON_CLAW_CUTTER, WEAPON_FLAME_THROWER, WEAPON_SLEDGE_HAMMER, WEAPON_SPINNNING_BLADE };
-        public static ConsoleColor[] WEAPON_COLORS = new ConsoleColor[] { ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.White, ConsoleColor.Gray, ConsoleColor.Green };
-        public static string[] WEAPON_TYPES = new string[] { "Electric", "Water", "Flying", "Rock/Ground", "Bug/Grass" };
+        public static ConsoleColor[] WEAPON_COLORS = new ConsoleColor[] { ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.DarkRed, ConsoleColor.Gray, ConsoleColor.Green };
+        public static string[] WEAPON_TYPES = new string[] { "Electric", "Water", "Flying", "Rock/Ground", "Grass" };
 
         private static ConsoleKey[] KONAMI_CODE = new ConsoleKey[] { ConsoleKey.UpArrow, ConsoleKey.UpArrow, ConsoleKey.DownArrow, ConsoleKey.DownArrow, ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.B, ConsoleKey.A };
         private System.Timers.Timer timer;
