@@ -11,8 +11,8 @@ namespace BattleBots
         public const string WEAPON_CIRCULAR_SAW = "Pikachu";
         public const string WEAPON_CLAW_CUTTER = "Squirtle";
         public const string WEAPON_FLAME_THROWER = "Charamander";
-        public const string WEAPON_SLEDGE_HAMMER = "Geodude";
-        public const string WEAPON_SPINNNING_BLADE = "Bulbasaur";
+        public const string WEAPON_SLEDGE_HAMMER = "Bulbasaur";
+        public const string WEAPON_SPINNNING_BLADE = "Geodude";
 
         public static string[] WEAPONS = new string[] { WEAPON_CIRCULAR_SAW, WEAPON_CLAW_CUTTER, WEAPON_FLAME_THROWER, WEAPON_SLEDGE_HAMMER, WEAPON_SPINNNING_BLADE };
         public static ConsoleColor[] WEAPON_COLORS = new ConsoleColor[] { ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.DarkRed, ConsoleColor.Gray, ConsoleColor.Green };
@@ -80,7 +80,7 @@ namespace BattleBots
 
             ///////////////////////////////////////////////////////////////////////
             SpeakingConsole.WriteLine("\nPlease choose a Pokemon from the following:");
-            
+
             foreach (string weapon in WEAPONS)
             {
                 string[] beatableWeapons = Array.FindAll(WEAPONS, w => CanBeat(weapon, w));
@@ -176,13 +176,29 @@ namespace BattleBots
                             blnValidAction = true;
                             if (CanBeat(battleBot.Weapon, computerWeapon))
                             {
-                                battleBot.GainPoints(5);
-                                SpeakingConsole.WriteLine("You have destroyed your opponent!!");
+                                if (IsCriticalTo(battleBot.Weapon, computerWeapon))
+                                {
+                                    battleBot.GainPoints(rGen.Next(6, 11));
+                                    SpeakingConsole.WriteLine("You have critically destroyed your opponent!!");
+                                }
+                                else
+                                {
+                                    battleBot.GainPoints(5);
+                                    SpeakingConsole.WriteLine("You have destroyed your opponent!!");
+                                }
                             }
                             else
                             {
-                                battleBot.HandleDamage(5);
-                                SpeakingConsole.WriteLine("You have tragically lost!!");
+                                if (IsCriticalTo(battleBot.Weapon, computerWeapon))
+                                {
+                                    battleBot.HandleDamage(rGen.Next(6, 11));
+                                    SpeakingConsole.WriteLine("You have tragically lost!!");
+                                }
+                                else
+                                {
+                                    battleBot.HandleDamage(5);
+                                    SpeakingConsole.WriteLine("You have lost!!");
+                                }
                             }
                             battleBot.ConsumeFuel(2 * intTimeElapsed);
                             break;
@@ -195,8 +211,16 @@ namespace BattleBots
                             }
                             else
                             {
-                                battleBot.HandleDamage(2);
-                                SpeakingConsole.WriteLine("Whoops, your shield has failed!!");
+                                if (IsCriticalTo(battleBot.Weapon, computerWeapon))
+                                {
+                                    battleBot.HandleDamage(rGen.Next(3, 5));
+                                    SpeakingConsole.WriteLine("Whoops, your shield has completely failed!!");
+                                }
+                                else
+                                {
+                                    battleBot.HandleDamage(2);
+                                    SpeakingConsole.WriteLine("Whoops, your shield has failed!!");
+                                }
                             }
                             battleBot.ConsumeFuel(intTimeElapsed);
                             break;
@@ -217,7 +241,7 @@ namespace BattleBots
                             if (battleBot.Weapon == computerWeapon)
                             {
                                 blnValidAction = true;
-                                SpeakingConsole.WriteLine("You have succesfully absorbed the opponent's power!!");
+                                SpeakingConsole.WriteLine("You have succesfully absorbed the opponent's power!! This tastes yummy OwO");
                                 battleBot.Refuel(10);
                                 battleBot.Heal(10);
                             }
@@ -247,7 +271,7 @@ namespace BattleBots
             switch (weapon)
             {
                 case WEAPON_CIRCULAR_SAW:
-                    if (otherWeapon == WEAPON_CLAW_CUTTER || otherWeapon == WEAPON_FLAME_THROWER)
+                    if (otherWeapon == WEAPON_SPINNNING_BLADE)
                         return true;
                     break;
                 case WEAPON_SLEDGE_HAMMER:
@@ -264,6 +288,34 @@ namespace BattleBots
                     break;
                 case WEAPON_FLAME_THROWER:
                     if (otherWeapon == WEAPON_SLEDGE_HAMMER || otherWeapon == WEAPON_CLAW_CUTTER)
+                        return true;
+                    break;
+            }
+            return false;
+        }
+
+        private static bool IsCriticalTo(string weapon, string otherWeapon)
+        {
+            switch (weapon)
+            {
+                case WEAPON_CIRCULAR_SAW:
+                    if (otherWeapon == WEAPON_FLAME_THROWER)
+                        return true;
+                    break;
+                case WEAPON_CLAW_CUTTER:
+                    if (otherWeapon == WEAPON_SPINNNING_BLADE)
+                        return true;
+                    break;
+                case WEAPON_FLAME_THROWER:
+                    if (otherWeapon == WEAPON_CLAW_CUTTER)
+                        return true;
+                    break;
+                case WEAPON_SLEDGE_HAMMER:
+                    if (otherWeapon == WEAPON_SPINNNING_BLADE)
+                        return true;
+                    break;
+                case WEAPON_SPINNNING_BLADE:
+                    if (otherWeapon == WEAPON_CIRCULAR_SAW)
                         return true;
                     break;
             }
