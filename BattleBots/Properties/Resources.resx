@@ -121,6 +121,9 @@
   <data name="Pokemon_Battle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pokemon_Battle.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Pokemon_MeetingOak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Pokemon_MeetingOak.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Pokemon_Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Pokemon_Open.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

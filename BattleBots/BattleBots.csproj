@@ -89,5 +89,8 @@
   <ItemGroup>
     <None Include="Resources\Pokemon_Open.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pokemon_MeetingOak.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

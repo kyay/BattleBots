@@ -15,6 +15,9 @@ namespace BattleBots
         public const string WEAPON_SPINNNING_BLADE = "Swadloon";
 
         public static string[] WEAPONS = new string[] { WEAPON_CIRCULAR_SAW, WEAPON_CLAW_CUTTER, WEAPON_FLAME_THROWER, WEAPON_SLEDGE_HAMMER, WEAPON_SPINNNING_BLADE };
+        public static ConsoleColor[] WEAPON_COLORS = new ConsoleColor[] { ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.White, ConsoleColor.Gray, ConsoleColor.Green };
+        public static string[] WEAPON_TYPES = new string[] { "Electric", "Water", "Flying", "Rock/Ground", "Bug/Grass" };
+
         private static ConsoleKey[] KONAMI_CODE = new ConsoleKey[] { ConsoleKey.UpArrow, ConsoleKey.UpArrow, ConsoleKey.DownArrow, ConsoleKey.DownArrow, ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.B, ConsoleKey.A };
         private System.Timers.Timer timer;
         private Random rGen = new Random();
@@ -23,6 +26,7 @@ namespace BattleBots
         private int intTimeElapsed;
 
         private SoundPlayer openingSound = new SoundPlayer(Resources.Pokemon_Open);
+        private SoundPlayer meetingOakSound = new SoundPlayer(Resources.Pokemon_MeetingOak);
         private SoundPlayer battleSound = new SoundPlayer(Resources.Pokemon_Battle);
 
         private bool blnIsBattleSoundPlaying = false;
@@ -49,15 +53,46 @@ namespace BattleBots
             {
                 SpeakingConsole.EnableSpeaking = false;
             }
-            SpeakingConsole.WriteLine("Welcome to Battle Bots! This is a game where there is no winning (just like life). Your goal is to get the most possible points.\n\nTo start, please enter the name for your bot:");
-            string strName = SpeakingConsole.ReadLine();
-            SpeakingConsole.WriteLine("\nPlease choose a weapon from the following:");
+            meetingOakSound.Play();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            SpeakingConsole.WriteLine("Welcome to Rock Paper Scissors Lizard Spock");
+            Console.WriteLine("\n Press Enter...");
+            Console.ReadLine();
 
+            SpeakingConsole.WriteLine("\n ...");
+            Console.ReadLine();
+            SpeakingConsole.WriteLine("\n  Opps, Wrong Program..");
+            Console.ReadLine();
+            SpeakingConsole.WriteLine("\n Welcome to Battle Bots");
+            Console.ReadLine();
+            SpeakingConsole.WriteLine("\n This is a Battle to the Dea... err of the Pokemon ");
+            Console.ReadLine();
+            SpeakingConsole.WriteLine("\n My name is Professor Oak, Welcome to the World of Pokemon");
+            Console.ReadLine();
+            Console.WriteLine("\n This world is inhabited by creatures called pokémon!");
+            Console.WriteLine("\n For some people, pokémon are pets. Others use them for fights.");
+            Console.WriteLine("\n Myself...I study pokémon as a profession.");
+            Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.White;
+            SpeakingConsole.WriteLine("\n Professor Oak: what is your Name?");
+
+            string strName = SpeakingConsole.ReadLine();
+
+            ///////////////////////////////////////////////////////////////////////
+            SpeakingConsole.WriteLine("\nPlease choose a Pokemon from the following:");
+            
             foreach (string weapon in WEAPONS)
             {
                 string[] beatableWeapons = Array.FindAll(WEAPONS, w => CanBeat(weapon, w));
-                SpeakingConsole.WriteLine("\n" + weapon + " Beats " + String.Join(" And ", beatableWeapons));
+                string[] unbeatableWeapons = Array.FindAll(WEAPONS, w => (!CanBeat(weapon, w)) && w != weapon);
+
+                Console.ForegroundColor = GetColorForWeapon(weapon);
+                SpeakingConsole.WriteLine("\n " + weapon + ": " + GetTypeForWeapon(weapon));
+                SpeakingConsole.WriteLine("\n     Strengths: " + string.Join(" And ", beatableWeapons));
+                SpeakingConsole.WriteLine("\n     Weekness: " + string.Join(" And ", unbeatableWeapons));
             }
+            //////////////////////////////////////////////////////////////////
+            ///
 
             string strWeapon;
             while (((strWeapon = SpeakingConsole.ReadLine()) == "" || !IsValidWeapon(strWeapon)) && strName != "")
@@ -65,6 +100,7 @@ namespace BattleBots
                 SpeakingConsole.WriteLine("Please enter a valid weapon from above");
             }
             openingSound.Stop();
+            meetingOakSound.Stop();
             timer.Start();
             intTimeSinceGameStart = 0;
             if (IsValidWeapon(strWeapon))
@@ -230,6 +266,16 @@ namespace BattleBots
         private static string GetValidWeaponName(string weapon)
         {
             return Array.Find(WEAPONS, s => weapon.Trim().ToLower() == s.Trim().ToLower());
+        }
+
+        private static ConsoleColor GetColorForWeapon(string weapon)
+        {
+            return WEAPON_COLORS[Array.FindIndex(WEAPONS, s => weapon.Trim().ToLower() == s.Trim().ToLower())];
+        }
+
+        private static string GetTypeForWeapon(string weapon)
+        {
+            return WEAPON_TYPES[Array.FindIndex(WEAPONS, s => weapon.Trim().ToLower() == s.Trim().ToLower())];
         }
     }
 }

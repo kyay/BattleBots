@@ -72,6 +72,15 @@ namespace BattleBots.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Pokemon_MeetingOak {
+            get {
+                return ResourceManager.GetStream("Pokemon_MeetingOak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream Pokemon_Open {
             get {
                 return ResourceManager.GetStream("Pokemon_Open", resourceCulture);
