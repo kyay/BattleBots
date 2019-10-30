@@ -92,5 +92,20 @@
   <ItemGroup>
     <None Include="Resources\Pokemon_MeetingOak.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bubble_Beam_part_1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rock_Tomb %281%29.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vine_Whip.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Flamethrower.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Thunderbolt %281%29.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

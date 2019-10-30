@@ -63,6 +63,24 @@ namespace BattleBots.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Bubble_Beam_part_1 {
+            get {
+                return ResourceManager.GetStream("Bubble_Beam_part_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Flamethrower {
+            get {
+                return ResourceManager.GetStream("Flamethrower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream Pokemon_Battle {
             get {
                 return ResourceManager.GetStream("Pokemon_Battle", resourceCulture);
@@ -84,6 +102,33 @@ namespace BattleBots.Properties {
         internal static System.IO.UnmanagedMemoryStream Pokemon_Open {
             get {
                 return ResourceManager.GetStream("Pokemon_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Rock_Tomb__1_ {
+            get {
+                return ResourceManager.GetStream("Rock_Tomb__1_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Thunderbolt__1_ {
+            get {
+                return ResourceManager.GetStream("Thunderbolt__1_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Vine_Whip {
+            get {
+                return ResourceManager.GetStream("Vine_Whip", resourceCulture);
             }
         }
     }

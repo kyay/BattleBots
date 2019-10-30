@@ -29,6 +29,12 @@ namespace BattleBots
         private SoundPlayer meetingOakSound = new SoundPlayer(Resources.Pokemon_MeetingOak);
         private SoundPlayer battleSound = new SoundPlayer(Resources.Pokemon_Battle);
 
+        private static SoundPlayer pikachuSound = new SoundPlayer(Resources.Thunderbolt__1_);
+        private static SoundPlayer squirtleSound = new SoundPlayer(Resources.Bubble_Beam_part_1);
+        private static SoundPlayer charamanderSound = new SoundPlayer(Resources.Flamethrower);
+        private static SoundPlayer bulbasaurSound = new SoundPlayer(Resources.Vine_Whip);
+        private static SoundPlayer geodudeSound = new SoundPlayer(Resources.Rock_Tomb__1_);
+
         private bool blnIsBattleSoundPlaying = false;
 
         public Game()
@@ -247,6 +253,10 @@ namespace BattleBots
                             }
                             break;
                     }
+                    if (blnValidAction)
+                    {
+                        GetSoundForWeapon(battleBot.Weapon).PlaySync();
+                    }
 
                 }
                 Thread.Sleep(1000);
@@ -340,6 +350,24 @@ namespace BattleBots
         private static string GetTypeForWeapon(string weapon)
         {
             return WEAPON_TYPES[Array.FindIndex(WEAPONS, s => weapon.Trim().ToLower() == s.Trim().ToLower())];
+        }
+
+        private static SoundPlayer GetSoundForWeapon(string weapon)
+        {
+            switch (weapon)
+            {
+                case WEAPON_CIRCULAR_SAW:
+                    return pikachuSound;
+                case WEAPON_CLAW_CUTTER:
+                    return squirtleSound;
+                case WEAPON_FLAME_THROWER:
+                    return charamanderSound;
+                case WEAPON_SLEDGE_HAMMER:
+                    return bulbasaurSound;
+                case WEAPON_SPINNNING_BLADE:
+                    return geodudeSound;
+            }
+            return null;
         }
     }
 }
