@@ -88,11 +88,11 @@ namespace BattleBots
 
                 Console.ForegroundColor = GetColorForWeapon(weapon);
                 SpeakingConsole.WriteLine("\n " + weapon + ": " + GetTypeForWeapon(weapon));
-                SpeakingConsole.WriteLine("\n     Strengths: " + string.Join(" And ", beatableWeapons));
-                SpeakingConsole.WriteLine("\n     Weekness: " + string.Join(" And ", unbeatableWeapons));
+                SpeakingConsole.WriteLine("\n\tStrengths: " + string.Join(" And ", beatableWeapons));
+                SpeakingConsole.WriteLine("\n\tWeekness: " + string.Join(" And ", unbeatableWeapons));
             }
             //////////////////////////////////////////////////////////////////
-            ///
+            Console.ForegroundColor = ConsoleColor.White;
 
             string strWeapon;
             while (((strWeapon = SpeakingConsole.ReadLine()) == "" || !IsValidWeapon(strWeapon)) && strName != "")
@@ -132,7 +132,19 @@ namespace BattleBots
             {
                 intBattleStartTime = intTimeSinceGameStart;
                 string computerWeapon = WEAPONS[rGen.Next(WEAPONS.Length)];
-                SpeakingConsole.WriteLine("\nYou are being attacked by a " + computerWeapon + ". What do you do?");
+                Console.ForegroundColor = GetColorForWeapon(battleBot.Weapon);
+                Console.WriteLine("███████████████████████████");
+                SpeakingConsole.WriteLine("\n\t\t" + battleBot.Weapon + "           ");
+
+                Console.ForegroundColor = ConsoleColor.White;
+                SpeakingConsole.WriteLine("\n\t\t----- VS -----   ");
+
+                Console.ForegroundColor = GetColorForWeapon(computerWeapon);
+                SpeakingConsole.WriteLine("\n\t\t" + computerWeapon);    // Pokemon
+                Console.WriteLine("███████████████████████████");
+
+                Console.ForegroundColor = ConsoleColor.White;
+                //SpeakingConsole.WriteLine("\nYou are being attacked by a " + computerWeapon + ". What do you do?");
                 bool blnValidAction = false;
                 char charReadKey = '\0';
                 while (!blnValidAction)
