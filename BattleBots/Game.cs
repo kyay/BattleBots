@@ -53,7 +53,6 @@ namespace BattleBots
 
         public BattleBot PromptUserForBot(int highScore)
         {
-            BattleBot result;
             openingSound.Play();
             Console.WriteLine("Do you want to enable the reading out of all the text?");
             if (Console.ReadLine().Trim().ToLower()[0] != 'y')
@@ -127,6 +126,7 @@ namespace BattleBots
                 result = new BattleBot();
             }
             result.UpdateHighScore(highScore);
+            return result;
         }
 
         public void Battle(ref BattleBot battleBot)
