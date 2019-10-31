@@ -16,7 +16,7 @@ namespace BattleBots
 
         public static string[] WEAPONS = new string[] { WEAPON_CIRCULAR_SAW, WEAPON_CLAW_CUTTER, WEAPON_FLAME_THROWER, WEAPON_SLEDGE_HAMMER, WEAPON_SPINNNING_BLADE };
         public static ConsoleColor[] WEAPON_COLORS = new ConsoleColor[] { ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.DarkRed, ConsoleColor.Gray, ConsoleColor.Green };
-        public static string[] WEAPON_TYPES = new string[] { "Electric", "Water", "Flying", "Rock/Ground", "Grass" };
+        public static string[] WEAPON_TYPES = new string[] { "Electric", "Water", "Fire", "Rock/Ground", "Grass" };
 
         private static ConsoleKey[] KONAMI_CODE = new ConsoleKey[] { ConsoleKey.UpArrow, ConsoleKey.UpArrow, ConsoleKey.DownArrow, ConsoleKey.DownArrow, ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.B, ConsoleKey.A };
         private System.Timers.Timer timer;
@@ -51,15 +51,17 @@ namespace BattleBots
             intTimeElapsed = intTimeSinceGameStart - intBattleStartTime;
         }
 
-        public BattleBot PromptUserForBot()
+        public BattleBot PromptUserForBot(int highScore)
         {
+            BattleBot result;
             openingSound.Play();
             Console.WriteLine("Do you want to enable the reading out of all the text?");
             if (Console.ReadLine().Trim().ToLower()[0] != 'y')
             {
                 SpeakingConsole.EnableSpeaking = false;
             }
-            meetingOakSound.Play();
+            openingSound.Stop();
+            meetingOakSound.PlayLooping();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             SpeakingConsole.WriteLine("Welcome to Rock Paper Scissors Lizard Spock");
             Console.WriteLine("\n Press Enter...");
@@ -105,25 +107,26 @@ namespace BattleBots
             {
                 SpeakingConsole.WriteLine("Please enter a valid weapon from above");
             }
-            openingSound.Stop();
             meetingOakSound.Stop();
             timer.Start();
             intTimeSinceGameStart = 0;
+            BattleBot result;
             if (IsValidWeapon(strWeapon))
             {
                 if (strName != "")
                 {
-                    return new BattleBot(strName, GetValidWeaponName(strWeapon));
+                    result = new BattleBot(strName, GetValidWeaponName(strWeapon));
                 }
                 else
                 {
-                    return new BattleBot(GetValidWeaponName(strWeapon));
+                    result = new BattleBot(GetValidWeaponName(strWeapon));
                 }
             }
             else
             {
-                return new BattleBot();
+                result = new BattleBot();
             }
+            result.UpdateHighScore(highScore);
         }
 
         public void Battle(ref BattleBot battleBot)
@@ -256,6 +259,7 @@ namespace BattleBots
                     if (blnValidAction)
                     {
                         GetSoundForWeapon(battleBot.Weapon).PlaySync();
+                        GetSoundForWeapon(computerWeapon).PlaySync();
                     }
 
                 }
@@ -270,7 +274,7 @@ namespace BattleBots
                 SpeakingConsole.WriteLine("Your bot has lost. Do you want to play again?");
                 if (SpeakingConsole.ReadLine().Trim().ToLower()[0] == 'y')
                 {
-                    battleBot = PromptUserForBot();
+                    battleBot = PromptUserForBot(battleBot.HighScore);
                     Battle(ref battleBot);
                 }
             }
